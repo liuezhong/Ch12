@@ -22,7 +22,7 @@ class treeNode:
         self.count += numOccur
         
     def disp(self, ind=1):
-        print '  '*ind, self.name, ' ', self.count
+        print('  '*ind, self.name, ' ', self.count)
         for child in self.children.values():
             child.disp(ind+1)
 
@@ -32,8 +32,9 @@ def createTree(dataSet, minSup=1): #create FP-tree from dataset but don't mine
     for trans in dataSet:#first pass counts frequency of occurance
         for item in trans:
             headerTable[item] = headerTable.get(item, 0) + dataSet[trans]
-    for k in headerTable.keys():  #remove items not meeting minSup
-        if headerTable[k] < minSup: 
+    # for k in headerTable.keys():  #remove items not meeting minSup
+    for k in list(headerTable):  #remove items not meeting minSup
+        if headerTable[k] < minSup:
             del(headerTable[k])
     freqItemSet = set(headerTable.keys())
     #print 'freqItemSet: ',freqItemSet
@@ -116,7 +117,7 @@ def createInitSet(dataSet):
         retDict[frozenset(trans)] = 1
     return retDict
 
-import twitter
+# import twitter
 from time import sleep
 import re
 
@@ -136,7 +137,7 @@ def getLotsOfTweets(searchStr):
     #you can get 1500 results 15 pages * 100 per page
     resultsPages = []
     for i in range(1,15):
-        print "fetching page %d" % i
+        print("fetching page %d" % i)
         searchResults = api.GetSearch(searchStr, per_page=100, page=i)
         resultsPages.append(searchResults)
         sleep(6)
